@@ -490,6 +490,9 @@ if(WIN32)
         #
         # See: https://github.com/tensorflow/tensorflow/pull/10962
         add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:/bigobj;/Ob2>")
+        # Suppress warnings about conversion from (float)(1e+300) in the stdgpu library
+        add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:/wd4056>") # overflow in floating-point constant arithmetic
+        add_compile_options("$<$<COMPILE_LANGUAGE:CUDA>:-Xcudafe;--diag_suppress 221>") # floating-point value does not fit in required floating-point type
     endif()
     if (STATIC_WINDOWS_RUNTIME)
         set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
