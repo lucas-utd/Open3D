@@ -1,0 +1,59 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "default",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/../../vcpkg/scripts/buildsystems/vcpkg.cmake"
+            }
+        },
+        {
+            "name": "open3d-custom",
+            "displayName": "Open3D Custom Build",
+            "inherits": "default",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "BUILD_PYTHON_MODULE": "OFF",
+                "BUILD_CUDA_MODULE": "ON",
+                "BUILD_WITH_CUDA_STATIC": "OFF",
+                "BUILD_GUI": "OFF",
+                "BUILD_WEBRTC": "OFF",
+                "BUILD_EXAMPLES": "OFF",
+                "BUILD_SHARED_LIBS": "ON",
+                "BUILD_VISUALIZATION": "OFF",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/open3d_install",
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "open3d-custom",
+            "configurePreset": "open3d-custom",
+            "configuration": "Release",
+            "targets": ["install"],
+            "jobs": 12
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "open3d-custom",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "open3d-custom"
+                },
+                {
+                    "type": "build",
+                    "name": "open3d-custom"
+                }
+            ]
+        }
+    ]
+}
