@@ -27,8 +27,7 @@
                 "BUILD_EXAMPLES": "OFF",
                 "BUILD_SHARED_LIBS": "ON",
                 "BUILD_VISUALIZATION": "OFF",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/open3d_install",
-                "VCPKG_TARGET_TRIPLET": "x64-windows"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/open3d_install"
             }
         }
     ],
