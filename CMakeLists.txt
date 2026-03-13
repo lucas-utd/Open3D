@@ -492,7 +492,10 @@ if(WIN32)
         add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:/bigobj;/Ob2>")
         # Suppress warnings about conversion from (float)(1e+300) in the stdgpu library
         add_compile_options("$<$<COMPILE_LANGUAGE:CXX>:/wd4056>") # overflow in floating-point constant arithmetic
-        add_compile_options("$<$<COMPILE_LANGUAGE:CUDA>:-Xcudafe;--diag_suppress 221>") # floating-point value does not fit in required floating-point type
+        # Suppress warnings about floating-point value does not fit in required floating-point type
+        add_compile_options("$<$<COMPILE_LANGUAGE:CUDA>:-Xcudafe=--diag_suppress=221>")
+        # Tell nvcc to ignore these specific cross-execution warnings, which are caused by the use of __host__ __device__ functions in the stdgpu library. 
+        add_compile_options("$<$<COMPILE_LANGUAGE:CUDA>:-Xcudafe=--diag_suppress=20011>")
     endif()
     if (STATIC_WINDOWS_RUNTIME)
         set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
