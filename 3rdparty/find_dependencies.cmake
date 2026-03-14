@@ -653,19 +653,11 @@ if(NOT USE_SYSTEM_GLEW)
         INCLUDE_DIRS
             include/
     )
-    # Help vcpkg-configured GLEW expose correct include paths on Windows
-    if (VCPKG_INSTALLED_DIR AND MSVC)
-        message("Using vcpkg-installed GLEW on Windows")
-        find_package(GLEW REQUIRED)
-        target_link_libraries(3rdparty_glew PUBLIC GLEW::GLEW)
-    endif()
     if(ENABLE_HEADLESS_RENDERING)
         target_compile_definitions(3rdparty_glew PUBLIC GLEW_OSMESA)
     endif()
-    # When on windows without vcpkg, we build GLEW as a static library and need to define GLEW_STATIC.
-    if(WIN32 AND NOT VCPKG_INSTALLED_DIR)
+    if(WIN32)
         target_compile_definitions(3rdparty_glew PUBLIC GLEW_STATIC)
-        message("Building with static GLEW on Windows")
     endif()
     list(APPEND Open3D_3RDPARTY_HEADER_TARGETS_FROM_CUSTOM Open3D::3rdparty_glew)
 else()
