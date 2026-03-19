@@ -1,0 +1,87 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "default",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/../../vcpkg/scripts/buildsystems/vcpkg.cmake",
+                "BUILD_PYTHON_MODULE": "OFF",
+                "BUILD_CUDA_MODULE": "ON",
+                "BUILD_WITH_CUDA_STATIC": "OFF",
+                "BUILD_GUI": "OFF",
+                "BUILD_WEBRTC": "OFF",
+                "BUILD_EXAMPLES": "OFF",
+                "BUILD_SHARED_LIBS": "ON",
+                "BUILD_VISUALIZATION": "OFF"
+            }
+        },
+        {
+            "name": "open3d-custom-release",
+            "displayName": "Open3D Custom Build Release",
+            "inherits": "default",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/open3d_install/Release"
+            }
+        },
+        {
+            "name": "open3d-custom-debug",
+            "displayName": "Open3D Custom Build Debug",
+            "inherits": "default",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/open3d_install/Debug"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "open3d-custom-release",
+            "configurePreset": "open3d-custom-release",
+            "configuration": "Release",
+            "targets": ["install"],
+            "jobs": 12
+        },
+        {
+            "name": "open3d-custom-debug",
+            "configurePreset": "open3d-custom-debug",
+            "configuration": "Debug",
+            "targets": ["install"],
+            "jobs": 12
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "open3d-custom-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "open3d-custom-release"
+                },
+                {
+                    "type": "build",
+                    "name": "open3d-custom-release"
+                }
+            ]
+        },
+        {
+            "name": "open3d-custom-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "open3d-custom-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "open3d-custom-debug"
+                }
+            ]
+        }
+    ]
+}
