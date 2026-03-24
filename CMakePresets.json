@@ -27,7 +27,7 @@
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/open3d_install/Release"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/../Libraries/open3d_install/Release"
             }
         },
         {
@@ -36,7 +36,7 @@
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/open3d_install/Debug"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/../Libraries/open3d_install/Debug"
             }
         }
     ],
